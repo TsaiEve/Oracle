@@ -1,9 +1,9 @@
 
 import React, { useState, useCallback, FormEvent, ChangeEvent, useEffect, useRef } from 'react';
-import { AppStep } from './types';
-import type { FortuneMethod, UserInfo, RequiredField } from './types';
-import { getFortuneTellingMethod, generateFortuneStream } from './services/geminiService';
-import Spinner from './components/Spinner';
+import { AppStep } from './types.ts';
+import type { FortuneMethod, UserInfo, RequiredField } from './types.ts';
+import { getFortuneTellingMethod, generateFortuneStream } from './services/geminiService.ts';
+import Spinner from './components/Spinner.tsx';
 
 const DynamicFormField: React.FC<{ field: RequiredField; value: string; onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void; }> = ({ field, value, onChange }) => {
     const baseClasses = "w-full bg-slate-900/40 border border-slate-700/50 rounded-xl p-4 text-slate-100 placeholder-slate-600 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400 transition-all duration-500 outline-none backdrop-blur-sm";

@@ -6,9 +6,13 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI 靈境大師 | 未來解碼</title>
-    <!-- 防崩潰墊片 -->
+    <!-- 防崩潰墊片：確保在所有環境下 process.env 都不會導致報錯 -->
     <script>
-      window.process = { env: { API_KEY: "" } };
+      if (typeof window.process === 'undefined') {
+        window.process = { env: { API_KEY: "" } };
+      } else if (typeof window.process.env === 'undefined') {
+        window.process.env = { API_KEY: "" };
+      }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Noto+Serif+TC:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">

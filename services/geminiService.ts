@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import type { FortuneMethod, UserInfo } from '../types';
+import type { FortuneMethod, UserInfo } from '../types.ts';
 
 const methodSelectionSchema = {
     type: Type.OBJECT,
