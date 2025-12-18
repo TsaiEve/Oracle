@@ -2,8 +2,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { FortuneMethod, UserInfo } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const methodSelectionSchema = {
     type: Type.OBJECT,
     properties: {
@@ -35,6 +33,9 @@ const methodSelectionSchema = {
 };
 
 export async function getFortuneTellingMethod(wish: string): Promise<FortuneMethod> {
+    // 在呼叫前才初始化，確保 process.env 已經就緒
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || (window as any).process?.env?.API_KEY });
+    
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-3-flash-preview',
@@ -51,7 +52,7 @@ export async function getFortuneTellingMethod(wish: string): Promise<FortuneMeth
 
         return JSON.parse(response.text.trim()) as FortuneMethod;
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Error in getFortuneTellingMethod:", error);
         throw new Error("數據連線異常，未來數據庫暫時離線。");
     }
 }
@@ -61,6 +62,8 @@ export async function generateFortuneStream(
     method: FortuneMethod,
     userInfo: UserInfo
 ): Promise<AsyncGenerator<string>> {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || (window as any).process?.env?.API_KEY });
+    
     const userInfoString = Object.entries(userInfo)
         .map(([key, value]) => `${key}: ${value}`)
         .join('; ');
